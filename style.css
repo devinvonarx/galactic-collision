@@ -1,0 +1,9 @@
+.demo{
+    display:flex;
+    object-fit: contain;
+}
+.toolbars{
+    display: flex;
+    object-fit: contain;
+    flex-flow: column wrap;
+}

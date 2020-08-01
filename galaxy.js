@@ -39,18 +39,18 @@ class Galaxy{
             positions.push(pos);
         }
         function calc_orbital_velocity(center_mass, radius){
-            return sqrt(G * center_mass / radius)
+            return Math.sqrt(G * center_mass / radius)
         }
         // Generate list of all stars
         let stars = [];
         let up = new THREE.Vector3(0.0, 1.0, 0.0);
         for (let i = 0; i<num_stars; i++){
             // Find normalized vector along direction of travel
-            absolute_pos = positions[i] + this.pos;
-            relative_pos = positions[i];
-            vec = relative_pos.cross(up).norm();
-            relative_vel = vec * calc_orbital_velocity(this.mass, relative_pos.mag);
-            absolute_vel = relative_vel + vel;
+            let absolute_pos = positions[i].add(this.pos);
+            let relative_pos = positions[i];
+            let vec = relative_pos.cross(up).normalize();
+            let relative_vel = vec * calc_orbital_velocity(this.mass, relative_pos.mag);
+            let absolute_vel = relative_vel + vel;
 
             stars.push(new Star(
                 masses[i],
@@ -60,6 +60,6 @@ class Galaxy{
                 color
             ))
         }
-        this.stars = np.array(stars);
+        this.stars = new NdArray(stars);
     }
 }

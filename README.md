@@ -1,7 +1,7 @@
 # Galactic Collision
 
 
-Galactic Collision is a program that allows  to simulate Milky Way and Andromeda Galaxies Collision in Real Time.
+Galactic Collision is a program that allows us to simulate Milky Way and Andromeda Galaxies Collision in Real Time.
 
 <p align="center">
   <img src="demo/collision.gif" width=700><br/>

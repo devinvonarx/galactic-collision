@@ -7,6 +7,24 @@ from random import gauss */
 
 // CONSTANTS
 
+var scene = new THREE.Scene();
+
+// Create a basic perspective camera
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+camera.position.z = 4;
+
+// Create a renderer with Antialiasing
+var renderer = new THREE.WebGLRenderer({antialias:true});
+
+// Configure renderer clear color
+renderer.setClearColor("#000000");
+
+// Configure renderer size
+renderer.setSize( window.innerWidth, window.innerHeight );
+
+// Append Renderer to DOM
+document.body.appendChild( renderer.domElement );
+
 function randn_bm(min, max, skew = 1) {
     let u = 0, v = 0;
     while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
@@ -71,12 +89,22 @@ function gravity(mass1, mass2, radius){
 function g_accel(mass, radius){
     // Limit minimum radius to avoid flinging out too many particles
     radius = Math.max(radius, MIN_ORBITAL_RADIUS);
+    //console.log(mass,radius);
     return G * mass / radius / radius;
 }
 
 // Calculate acceleration on an object caused by galaxy
 function accel(obj, galaxy){
-    r_galaxy = galaxy.pos - obj.pos;
+    let r_galaxy = galaxy.pos.clone().sub(obj.pos);
+    //console.log(r_galaxy.normalize(),g_accel(galaxy.mass, r_galaxy.ma));
     // We have a = F / m = G * m_center / r ^2
-    return r_galaxy.norm() * g_accel(galaxy.mass, r_galaxy.mag);
+    return r_galaxy.setLength(g_accel(galaxy.mass, r_galaxy.length()));
+}
+function sphere(pos, radius, color) {
+    var geometry = new THREE.SphereGeometry(radius);
+    var material = new THREE.MeshBasicMaterial({color: color});
+    var sphere = new THREE.Mesh(geometry, material);
+    sphere.position = pos;
+    scene.add(sphere);
+    return sphere;
 }

@@ -1,20 +1,13 @@
 //import "global.js";
 
 class Star {
-    constuctor(mass, radius, pos, vel, color) {
+    constructor(mass, radius, pos, vel, color) {
         this.mass = mass;
         this.vel = vel;
         this._pos = pos;
-
-        function sphere(pos, radius, color) {
-            var geometry = new THREE.SphereGeometry(radius);
-            var material = new THREE.MeshBasicMaterial({color: color});
-            var sphere = new THREE.Mesh(geometry, material);
-            scene.add(sphere);
-            return sphere;
-        }
+        
         //this.obj = sphere({ pos: pos / DIST_SCALE, radius: radius, color: color });
-        this.obj = sphere;
+        this.obj = sphere(pos, radius, color);
     }
     // Externally use scaled version for physics, use normalized version for graphics
 
@@ -23,11 +16,12 @@ class Star {
     }
 
     set pos(value) {
-        this.obj.pos = value / DIST_SCALE;
         this._pos = value;
+
+        this.obj.position.copy(value.clone().divideScalar(DIST_SCALE));
     }
 
-    __str__() {
+    toString() {
         return "Mass: " + str(this.mass) + "\nPos: " + str(this.pos) +
             "\nVel: " + str(this.vel);
     }

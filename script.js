@@ -6,4 +6,4 @@ disp.innerHTML = "the js variable 'a' currently = " + a;
 slider.addEventListener("change", function(){
   a = slider.value;
   disp.innerHTML = "the js variable 'a' currently = " + a;
-}
+})

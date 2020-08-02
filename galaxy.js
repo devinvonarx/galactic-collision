@@ -33,25 +33,27 @@ class Galaxy{
             )
 
             // Limit radius to avoid particles shooting to nowhere
-            if (pos.mag < MIN_ORBITAL_RADIUS){
-                pos.mag = MIN_ORBITAL_RADIUS;
+            if (pos.length() < MIN_ORBITAL_RADIUS){
+                pos.setLength(MIN_ORBITAL_RADIUS);
             }
             positions.push(pos);
         }
         function calc_orbital_velocity(center_mass, radius){
-            return Math.sqrt(G * center_mass / radius)
+            return Math.sqrt(G * center_mass / radius);
         }
         // Generate list of all stars
         let stars = [];
         let up = new THREE.Vector3(0.0, 1.0, 0.0);
         for (let i = 0; i<num_stars; i++){
             // Find normalized vector along direction of travel
-            let absolute_pos = positions[i].add(this.pos);
-            let relative_pos = positions[i];
-            let vec = relative_pos.cross(up).normalize();
-            let relative_vel = vec * calc_orbital_velocity(this.mass, relative_pos.mag);
-            let absolute_vel = relative_vel + vel;
+            let absolute_pos = positions[i].clone().add(this.pos);
+            let relative_pos = positions[i].clone();
+            let len = relative_pos.length();
+            let vec = relative_pos.clone().cross(up).normalize();
+            let relative_vel = vec.clone().multiplyScalar(calc_orbital_velocity(this.mass, len));
 
+            let absolute_vel = relative_vel.clone().add(vel);
+//TODO kill clones
             stars.push(new Star(
                 masses[i],
                 STAR_RADIUS,
@@ -60,6 +62,6 @@ class Galaxy{
                 color
             ))
         }
-        this.stars = new NdArray(stars);
+        this.stars = stars;
     }
 }

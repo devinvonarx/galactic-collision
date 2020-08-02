@@ -61,7 +61,8 @@ function main(){
         t += dt;
         renderer.render(scene, camera);
         //console.log("hi");
-        //requestAnimationFrame(drawScene);
+        debugger;
+        requestAnimationFrame(drawScene);
     }
 
     drawScene();

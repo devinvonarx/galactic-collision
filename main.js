@@ -19,11 +19,11 @@ function main(){
         MAX_ORBITAL_RADIUS,
         ANDROMEDA_GALAXY_THICKNESS,
         "#00FFFF"
-    )
+    );
     console.log(milky_way);
-    function drawScene(){
+    
         //rate(100);
-
+//////////////////////////
         mag_difference = milky_way.pos.length() - andromeda.pos.length();
 
 
@@ -59,9 +59,11 @@ function main(){
         andromeda.pos = andromeda.vel.clone().multiplyScalar(dt);
 
         t += dt;
+        function drawScene(){
         renderer.render(scene, camera);
         //console.log("hi");
-        debugger;
+        //debugger;
+        controls.update();
         requestAnimationFrame(drawScene);
     }
 

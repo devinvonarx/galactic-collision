@@ -4,10 +4,10 @@ class Star {
     constructor(mass, radius, pos, vel, color) {
         this.mass = mass;
         this.vel = vel;
-        this._pos = pos;
         
         //this.obj = sphere({ pos: pos / DIST_SCALE, radius: radius, color: color });
-        this.obj = sphere(pos, radius, color);
+        this.obj = sphere(pos / DIST_SCALE, radius, color);
+        this.pos = pos; //must create obj before setting pos
     }
     // Externally use scaled version for physics, use normalized version for graphics
 

@@ -10,8 +10,10 @@ from random import gauss */
 var scene = new THREE.Scene();
 
 // Create a basic perspective camera
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-camera.position.z = 4;
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 3000 );
+
+camera.position.set(720,200,800);
+camera.rotation.set(-0.84,0.51,0.5);
 
 // Create a renderer with Antialiasing
 var renderer = new THREE.WebGLRenderer({antialias:true});
@@ -19,11 +21,12 @@ var renderer = new THREE.WebGLRenderer({antialias:true});
 // Configure renderer clear color
 renderer.setClearColor("#000000");
 
-// Configure renderer size
-renderer.setSize( window.innerWidth, window.innerHeight );
-
 // Append Renderer to DOM
 document.body.appendChild( renderer.domElement );
+
+// Configure renderer size
+renderer.setSize( window.innerWidth, window.innerHeight );
+var controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 function randn_bm(min, max, skew = 1) {
     let u = 0, v = 0;
@@ -56,8 +59,8 @@ const AVG_SOLAR_MASS = SOLAR_MASS * 3.0;
 const DIST_SCALE = 1e20;  // 1e20
 
 // Galactic parameters
-const MAX_ORBITAL_RADIUS = DIST_SCALE * 10;
-const MIN_ORBITAL_RADIUS = DIST_SCALE * 0.15;
+const MAX_ORBITAL_RADIUS = DIST_SCALE * 10000;
+const MIN_ORBITAL_RADIUS = DIST_SCALE * 150;
 
 const MILKY_WAY_GALAXY_THICKNESS = DIST_SCALE * 0.9;
 const ANDROMEDA_GALAXY_THICKNESS = DIST_SCALE * 0.2;
@@ -66,10 +69,10 @@ const ANDROMEDA_GALAXY_THICKNESS = DIST_SCALE * 0.2;
 // Milky Way contains about 300 billion stars
 const NUM_STARS_MILKY_WAY = 700;
 // Andromeda Galaxy contains about 1 trillion (10^12) stars
-const NUM_STARS_ANDROMEDA = 1400;
+let NUM_STARS_ANDROMEDA = 1400;
 
 // Graphical constants
-const STAR_RADIUS = 0.025;
+const STAR_RADIUS = 10;
 const dt = 1e17;
 
 
@@ -104,7 +107,7 @@ function sphere(pos, radius, color) {
     var geometry = new THREE.SphereGeometry(radius);
     var material = new THREE.MeshBasicMaterial({color: color});
     var sphere = new THREE.Mesh(geometry, material);
-    sphere.position = pos;
+    sphere.position.copy(pos);
     scene.add(sphere);
     return sphere;
 }

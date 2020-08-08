@@ -21,7 +21,12 @@ function main(){
         "#00FFFF"
     );
     console.log(milky_way);
-    
+    let i = 0;
+    function drawScene(){
+        if(i<5){
+
+        
+        i++;
         //rate(100);
 //////////////////////////
         mag_difference = milky_way.pos.length() - andromeda.pos.length();
@@ -53,13 +58,13 @@ function main(){
             }
         }
         milky_way.vel.add((accel(milky_way, andromeda)).multiplyScalar(dt));
-        milky_way.pos = milky_way.vel.clone().multiplyScalar(dt);
+        milky_way.pos.add(milky_way.vel.clone().multiplyScalar(dt));
 
         andromeda.vel.add((accel(andromeda, milky_way)).multiplyScalar(dt));
-        andromeda.pos = andromeda.vel.clone().multiplyScalar(dt);
+        andromeda.pos.add(andromeda.vel.clone().multiplyScalar(dt));
 
         t += dt;
-        function drawScene(){
+    }
         renderer.render(scene, camera);
         //console.log("hi");
         //debugger;

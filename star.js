@@ -6,7 +6,7 @@ class Star {
         this.vel = vel;
         
         //this.obj = sphere({ pos: pos / DIST_SCALE, radius: radius, color: color });
-        this.obj = sphere(pos / DIST_SCALE, radius, color);
+        this.obj = sphere(pos.clone().divideScalar(DIST_SCALE), radius, color);
         this.pos = pos; //must create obj before setting pos
     }
     // Externally use scaled version for physics, use normalized version for graphics

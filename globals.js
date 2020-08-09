@@ -12,7 +12,7 @@ var scene = new THREE.Scene();
 // Create a basic perspective camera
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 3000 );
 
-camera.position.set(720,200,800);
+camera.position.set(0.484,2.706,4.194);
 camera.rotation.set(-0.84,0.51,0.5);
 
 // Create a renderer with Antialiasing
@@ -26,6 +26,13 @@ document.body.appendChild( renderer.domElement );
 
 // Configure renderer size
 renderer.setSize( window.innerWidth, window.innerHeight );
+
+window.onresize = () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
 var controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 function randn_bm(min, max, skew = 1) {
@@ -59,8 +66,8 @@ const AVG_SOLAR_MASS = SOLAR_MASS * 3.0;
 const DIST_SCALE = 1e20;  // 1e20
 
 // Galactic parameters
-const MAX_ORBITAL_RADIUS = DIST_SCALE * 10000;
-const MIN_ORBITAL_RADIUS = DIST_SCALE * 150;
+const MAX_ORBITAL_RADIUS = DIST_SCALE * 10;
+const MIN_ORBITAL_RADIUS = DIST_SCALE * .15;
 
 const MILKY_WAY_GALAXY_THICKNESS = DIST_SCALE * 0.9;
 const ANDROMEDA_GALAXY_THICKNESS = DIST_SCALE * 0.2;
@@ -72,8 +79,8 @@ const NUM_STARS_MILKY_WAY = 700;
 let NUM_STARS_ANDROMEDA = 1400;
 
 // Graphical constants
-const STAR_RADIUS = 10;
-const dt = 1e17;
+const STAR_RADIUS = 0.025;
+const dt = 5e16;
 
 
 // FUNCTIONS
@@ -103,6 +110,7 @@ function accel(obj, galaxy){
     // We have a = F / m = G * m_center / r ^2
     return r_galaxy.setLength(g_accel(galaxy.mass, r_galaxy.length()));
 }
+
 function sphere(pos, radius, color) {
     var geometry = new THREE.SphereGeometry(radius);
     var material = new THREE.MeshBasicMaterial({color: color});

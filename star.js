@@ -12,19 +12,16 @@ class Star {
     // Externally use scaled version for physics, use normalized version for graphics
 
     get pos() {
-        
         return this._pos;
     }
 
     set pos(value) {
-        
         this._pos = value;
-
         this.obj.position.copy(value.clone().divideScalar(DIST_SCALE));
     }
 
     addToPos(vec){
-        this.pos.add(vec);
+        this._pos.add(vec);
         this.obj.position.add(vec.clone().divideScalar(DIST_SCALE));
     }
 

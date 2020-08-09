@@ -72,8 +72,8 @@ const NUM_STARS_MILKY_WAY = 700;
 let NUM_STARS_ANDROMEDA = 1400;
 
 // Graphical constants
-const STAR_RADIUS = 0.005;
-const dt = 1e17;
+const STAR_RADIUS = 0.025;
+const dt = 5e16;
 
 
 // FUNCTIONS

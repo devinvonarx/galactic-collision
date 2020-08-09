@@ -20,10 +20,11 @@ function main() {
         ANDROMEDA_GALAXY_THICKNESS,
         "#00FFFF"
     );
+    const galaxies = [milky_way, andromeda];
     console.log(milky_way);
     let i = 0;
     function drawScene() {
-        if (i < 60) {
+        //if (i < 300) {
 
 
             i++;
@@ -31,21 +32,26 @@ function main() {
             //////////////////////////
             //mag_difference = milky_way.pos.length() - andromeda.pos.length();
 
-
-            for (let star of milky_way.stars) {
-                star.vel.add(accel(star, andromeda).multiplyScalar(dt));
-                star.vel.add(accel(star, milky_way).multiplyScalar(dt));
-                star.pos.add(star.vel.clone().multiplyScalar(dt));
-
-                // if(mag_difference == -6+18):
-                //     star.obj.color = vector(1, 0.5, 0)
-                if (andromeda.pos.length() < 1.1920057081525512e+20) {
-                    star.obj.material.color.setHex("#FF0000");
+            for(let galaxy of galaxies){
+                for (let star of galaxy.stars) {
+                    for(let galaxy2 of galaxies){
+                        star.vel.add(accel(star, galaxy2).multiplyScalar(dt));
+                    }
+                    
+                    //star.vel.add(accel(star, milky_way).multiplyScalar(dt));
+                    star.addToPos(star.vel.clone().multiplyScalar(dt));
+    
+                    // if(mag_difference == -6+18):
+                    //     star.obj.color = vector(1, 0.5, 0)
+                    if (andromeda.pos.length() < 1.1920057081525512e+20) {
+                        star.obj.material.color.setHex(0xFF0000);
+                    }
                 }
             }
+            
             //andromeda_mask = nj.zeros(andromeda.stars.length);
 
-            for (let star of andromeda.stars) {
+            /*for (let star of andromeda.stars) {
                 star.vel.add(accel(star, milky_way).multiplyScalar(dt));
                 star.vel.add(accel(star, andromeda).multiplyScalar(dt));
                 star.pos.add(star.vel.clone().multiplyScalar(dt));
@@ -55,7 +61,9 @@ function main() {
                 if (andromeda.pos.length() < 1.1920057081525512e+20) {
                     star.obj.material.color.setHex("#FF0000");
                 }
-            }
+            }*/
+
+        
             milky_way.vel.add(accel(milky_way, andromeda).multiplyScalar(dt));
             milky_way.pos.add(milky_way.vel.clone().multiplyScalar(dt));
             console.log(milky_way.vel);
@@ -64,7 +72,7 @@ function main() {
             andromeda.pos.add(andromeda.vel.clone().multiplyScalar(dt));
 
             t += dt;
-        }
+        //}
         renderer.render(scene, camera);
         //console.log("hi");
         //debugger;

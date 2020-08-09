@@ -26,6 +26,13 @@ document.body.appendChild( renderer.domElement );
 
 // Configure renderer size
 renderer.setSize( window.innerWidth, window.innerHeight );
+
+window.onresize = () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
 var controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 function randn_bm(min, max, skew = 1) {
@@ -103,6 +110,7 @@ function accel(obj, galaxy){
     // We have a = F / m = G * m_center / r ^2
     return r_galaxy.setLength(g_accel(galaxy.mass, r_galaxy.length()));
 }
+
 function sphere(pos, radius, color) {
     var geometry = new THREE.SphereGeometry(radius);
     var material = new THREE.MeshBasicMaterial({color: color});

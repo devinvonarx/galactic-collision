@@ -2,7 +2,7 @@
 //import "galaxy.js";
 //import "https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js";
 
-function main(){
+function main() {
     let t = 0;
     milky_way = new Galaxy(
         NUM_STARS_MILKY_WAY,
@@ -22,49 +22,49 @@ function main(){
     );
     console.log(milky_way);
     let i = 0;
-    function drawScene(){
-        if(i<5){
-
-        
-        i++;
-        //rate(100);
-//////////////////////////
-        mag_difference = milky_way.pos.length() - andromeda.pos.length();
+    function drawScene() {
+        if (i < 60) {
 
 
-        for (let star of milky_way.stars){
-            star.vel.add(accel(star, andromeda).multiplyScalar(dt));
+            i++;
+            //rate(100);
+            //////////////////////////
+            //mag_difference = milky_way.pos.length() - andromeda.pos.length();
 
-            star.vel.add(accel(star, milky_way).multiplyScalar(dt));
-            star.pos.add(star.vel.clone().multiplyScalar(dt));
 
-            // if(mag_difference == -6+18):
-            //     star.obj.color = vector(1, 0.5, 0)
-            if(andromeda.pos.length() < 1.1920057081525512e+20){
-                star.obj.material.color.setHex("#FF0000");
+            for (let star of milky_way.stars) {
+                star.vel.add(accel(star, andromeda).multiplyScalar(dt));
+                star.vel.add(accel(star, milky_way).multiplyScalar(dt));
+                star.pos.add(star.vel.clone().multiplyScalar(dt));
+
+                // if(mag_difference == -6+18):
+                //     star.obj.color = vector(1, 0.5, 0)
+                if (andromeda.pos.length() < 1.1920057081525512e+20) {
+                    star.obj.material.color.setHex("#FF0000");
+                }
             }
-        }
-        //andromeda_mask = nj.zeros(andromeda.stars.length);
+            //andromeda_mask = nj.zeros(andromeda.stars.length);
 
-        for (let star of andromeda.stars){
-            star.vel.add(accel(star, milky_way).multiplyScalar(dt));
-            star.vel.add(accel(star, andromeda).multiplyScalar(dt));
-            star.pos.add(star.vel.clone().multiplyScalar(dt));
-            
-            // if(mag_difference < -6+18 and mag_difference > -5e+18):
-            //     star.obj.color = vector(1, 0.5, 0)
-            if(andromeda.pos.length() < 1.1920057081525512e+20){
-                star.obj.material.color.setHex("#FF0000");
+            for (let star of andromeda.stars) {
+                star.vel.add(accel(star, milky_way).multiplyScalar(dt));
+                star.vel.add(accel(star, andromeda).multiplyScalar(dt));
+                star.pos.add(star.vel.clone().multiplyScalar(dt));
+
+                // if(mag_difference < -6+18 and mag_difference > -5e+18):
+                //     star.obj.color = vector(1, 0.5, 0)
+                if (andromeda.pos.length() < 1.1920057081525512e+20) {
+                    star.obj.material.color.setHex("#FF0000");
+                }
             }
+            milky_way.vel.add(accel(milky_way, andromeda).multiplyScalar(dt));
+            milky_way.pos.add(milky_way.vel.clone().multiplyScalar(dt));
+            console.log(milky_way.vel);
+            console.log(milky_way.pos);
+            andromeda.vel.add(accel(andromeda, milky_way).multiplyScalar(dt));
+            andromeda.pos.add(andromeda.vel.clone().multiplyScalar(dt));
+
+            t += dt;
         }
-        milky_way.vel.add((accel(milky_way, andromeda)).multiplyScalar(dt));
-        milky_way.pos.add(milky_way.vel.clone().multiplyScalar(dt));
-
-        andromeda.vel.add((accel(andromeda, milky_way)).multiplyScalar(dt));
-        andromeda.pos.add(andromeda.vel.clone().multiplyScalar(dt));
-
-        t += dt;
-    }
         renderer.render(scene, camera);
         //console.log("hi");
         //debugger;
